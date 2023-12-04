@@ -64,5 +64,6 @@ nnoremap <Leader>tp :lua require("utils").term_in_cur_file_dir()<CR>
 nnoremap <Leader>ts :vs<CR><c-w>l:terminal<CR>
 nnoremap <Leader>vs :vs<CR>
 nnoremap <Leader>q :q<CR>
+nmap <Leader>nf :tabnew<CR>:tcd ~/Note<CR><Leader>f
 
 tnoremap <c-j> <c-\><c-n> 
