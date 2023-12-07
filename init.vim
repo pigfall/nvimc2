@@ -46,7 +46,6 @@ inoremap <c-f> <Right>
 inoremap <M-f> <ESC>ea
 inoremap <c-b> <Left>
 inoremap <M-b> <ESC>bi
-inoremap <c-L> <ESC>ei
 inoremap <c-k> <ESC><Right>Da
 " To see <c-n> binded to which command
 " :verbose inoremap <c-n>
