@@ -14,8 +14,8 @@ EOF
 let mapleader = "'" 
 
 lua << EOF
-local lspconfig = require('lspconfig')
-lspconfig.gopls.setup {}
+-- local lspconfig = require('lspconfig')
+-- lspconfig.gopls.setup {}
 require("tzz-init")
 EOF
 
