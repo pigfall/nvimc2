@@ -19,6 +19,26 @@ autocmd("FileType", {
     end
 })
 
+autocmd("FileType", {
+    pattern = "rust",
+    callback = function()
+        local root_dir = vim.fs.dirname(
+            vim.fs.find({"Cargo.toml"}, { upward = false })[1]
+        )
+        local client = vim.lsp.start({
+            name = 'rust-analyzer',
+            cmd = { 'rust-analyzer' },
+            -- cmd = function(...)
+            --   return vim.lsp.rpc.connect("127.0.0.1",8080)(...)
+            -- end,
+            root_dir = root_dir,
+            on_attach = on_attach
+
+        })
+        vim.lsp.buf_attach_client(0, client)
+    end
+})
+
 function on_attach(client,bufnr)
   local opts = { buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
