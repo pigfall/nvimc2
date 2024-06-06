@@ -12,8 +12,20 @@ autocmd("FileType", {
             --   return vim.lsp.rpc.connect("127.0.0.1",8080)(...)
             -- end,
             root_dir = root_dir,
-            on_attach = on_attach
-
+            on_attach = on_attach,
+            settings = {
+              gopls={
+              hints = {
+                rangeVariableTypes = true,
+                parameterNames = true,
+                constantValues = true,
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                functionTypeParameters = true,
+              },
+              },
+            },
         })
         vim.lsp.buf_attach_client(0, client)
     end
