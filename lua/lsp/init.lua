@@ -1,9 +1,11 @@
 local autocmd = vim.api.nvim_create_autocmd
 autocmd("FileType", {
     pattern = "go",
+    once = true,
+    nested = true,
     callback = function()
         local root_dir = vim.fs.dirname(
-            vim.fs.find({ 'go.mod', 'go.work', '.git' }, { upward = true })[1]
+            vim.fs.find({ 'go.mod', 'go.work', '.git' }, { upward = false })[1]
         )
         local client = vim.lsp.start({
             name = 'gopls',
@@ -28,18 +30,27 @@ autocmd("FileType", {
             },
         })
         vim.lsp.buf_attach_client(0, client)
+        vim.lsp.inlay_hint.enable()
+        autocmd("FileType",{
+          pattern = "go",
+          callback = function()
+            vim.print(client)
+            vim.lsp.buf_attach_client(0, client)
+          end,
+        }
+        )
     end
 })
 
-autocmd("LspProgress", {
-  callback = function(arg)
-    vim.print(arg.data.params.value)
-    if arg.data.params.value.title == "Indexing" and arg.data.params.value.kind == "end" then
-      vim.print("init done ")
-    end
-  end,
-}
-)
+-- autocmd("LspProgress", {
+--   callback = function(arg)
+--     vim.print(arg.data.params.value)
+--     if arg.data.params.value.title == "Indexing" and arg.data.params.value.kind == "end" then
+--       vim.print("init done ")
+--     end
+--   end,
+-- }
+-- )
 
 autocmd("FileType", {
     pattern = "rust",
