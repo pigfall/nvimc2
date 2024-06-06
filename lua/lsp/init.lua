@@ -19,6 +19,16 @@ autocmd("FileType", {
     end
 })
 
+autocmd("LspProgress", {
+  callback = function(arg)
+    vim.print(arg.data.params.value)
+    if arg.data.params.value.title == "Indexing" and arg.data.params.value.kind == "end" then
+      vim.print("init done ")
+    end
+  end,
+}
+)
+
 autocmd("FileType", {
     pattern = "rust",
     callback = function()
@@ -32,8 +42,13 @@ autocmd("FileType", {
             --   return vim.lsp.rpc.connect("127.0.0.1",8080)(...)
             -- end,
             root_dir = root_dir,
-            on_attach = on_attach
-
+            -- init_options={["rust-analyzer.cargo.target"] = "i686-linux-android"},
+            init_options={
+              ["cargo"] = {
+                  target= "i686-linux-android"
+              },
+            },
+            on_attach = on_attach,
         })
         vim.lsp.buf_attach_client(0, client)
     end
