@@ -66,3 +66,10 @@ nnoremap <Leader>q :q<CR>
 nmap <Leader>0f :tabnew<CR>:tcd ~/Note<CR><Leader>f
 
 tnoremap <c-j> <c-\><c-n> 
+
+colorscheme tokyonight-day
+
+lua << EOF
+vim.cmd('execute "!direnv allow ."')
+EOF
+

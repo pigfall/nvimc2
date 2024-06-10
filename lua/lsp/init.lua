@@ -1,9 +1,37 @@
+vim.notify = require("notify")
+
 local autocmd = vim.api.nvim_create_autocmd
 autocmd("FileType", {
     pattern = "go",
     once = true,
     nested = true,
     callback = function()
+        local lsp_init_notify = {}
+        local setting_up_workspace_title = "Setting up workspace"
+        autocmd("LspProgress", {
+          callback = function(arg)
+            local title = arg.data.params.value.title
+            local kind = arg.data.params.value.kind
+            if title == setting_up_workspace_title and kind == "begin" then
+              lsp_init_notify = vim.notify(setting_up_workspace_title,vim.log.levels.INFO,{timeout=false,title="Initing Language Server"})
+              return
+            end
+            if title == setting_up_workspace_title and kind == "end" then
+              vim.notify("Done",vim.log.levels.INFO,{timeout=5000, title="LSP Initialization Is Compleleted",replace=lsp_init_notify})
+              return
+            end
+            vim.print(arg.data.params.value)
+            if title == "Indexing" and kind == "end" then
+              vim.notify("Done",vim.log.levels.INFO,{timeout=5000, title="LSP Initialization Is Compleleted",replace=lsp_init_notify})
+              return
+            end
+            if title == "Indexing" then
+              vim.notify(arg.data.params.value.message,vim.log.levels.INFO,{timeout=false, title="Initing Language Server",replace=lsp_init_notify})
+            end
+        end,
+      })
+
+
         local root_dir = vim.fs.dirname(
             vim.fs.find({ 'go.mod', 'go.work', '.git' }, { upward = false })[1]
         )
@@ -34,23 +62,12 @@ autocmd("FileType", {
         autocmd("FileType",{
           pattern = "go",
           callback = function()
-            vim.print(client)
             vim.lsp.buf_attach_client(0, client)
           end,
-        }
-        )
+        })
     end
 })
 
--- autocmd("LspProgress", {
---   callback = function(arg)
---     vim.print(arg.data.params.value)
---     if arg.data.params.value.title == "Indexing" and arg.data.params.value.kind == "end" then
---       vim.print("init done ")
---     end
---   end,
--- }
--- )
 
 autocmd("FileType", {
     pattern = "rust",
