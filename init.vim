@@ -70,6 +70,13 @@ tnoremap <c-j> <c-\><c-n>
 colorscheme tokyonight-day
 
 lua << EOF
-vim.cmd('execute "!direnv allow ."')
+if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 then
+  vim.opt.shell = 'powershell.exe'
+end
+
+if table.getn(vim.fs.find({ '.envrc' }, { upward = false })) == 1 then
+  vim.cmd('execute "!direnv allow ."')
+end
+
 EOF
 
