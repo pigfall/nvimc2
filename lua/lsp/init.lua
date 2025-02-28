@@ -1,5 +1,33 @@
 vim.notify = require("notify")
 
+-- Safely call coc#config('coc.enabled', 1)
+  local ok, err = pcall(vim.fn['coc#config'], 'coc.enabled', 1)
+  if ok then
+    if vim.fn.exists('*coc#refresh') == 1 then
+      local keyset = vim.keymap.set
+      keyset("i", "<c-o>", "coc#refresh()", {silent = true, expr = true})
+      keyset("n", "<c-]>", "<Plug>(coc-definition)", {silent = true})
+      keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
+      keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
+      keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+      -- Set nvim-notify as the notification handler
+  vim.notify = require("notify")
+
+  -- Configure coc.nvim notifications
+  vim.fn['coc#config']('notification', {
+    enabled = true,    -- Enable notifications
+    progress = true    -- Show progress updates
+  })
+
+  -- Set log level to info for LSP startup details
+  vim.fn['coc#config']('coc.preferences.logLevel', 'debug')
+
+  -- Optional: Ensure coc.nvim is enabled
+  vim.fn['coc#config']('coc.enabled', true)
+      return
+    end
+  end
+
 local autocmd = vim.api.nvim_create_autocmd
 autocmd("FileType", {
     pattern = "go",
@@ -12,6 +40,7 @@ autocmd("FileType", {
           callback = function(arg)
             local title = arg.data.params.value.title
             local kind = arg.data.params.value.kind
+            vim.print(title,kind)
             if title == setting_up_workspace_title and kind == "begin" then
               lsp_init_notify = vim.notify(setting_up_workspace_title,vim.log.levels.INFO,{timeout=false,title="Initing Language Server"})
               return
