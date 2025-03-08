@@ -1,32 +1,26 @@
 vim.notify = require("notify")
 
 -- Safely call coc#config('coc.enabled', 1)
-  local ok, err = pcall(vim.fn['coc#config'], 'coc.enabled', 1)
-  if ok then
-    if vim.fn.exists('*coc#refresh') == 1 then
-      local keyset = vim.keymap.set
-      keyset("i", "<c-o>", "coc#refresh()", {silent = true, expr = true})
-      keyset("n", "<c-]>", "<Plug>(coc-definition)", {silent = true})
-      keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
-      keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-      keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
-      -- Set nvim-notify as the notification handler
-  vim.notify = require("notify")
+   local ok, err = pcall(vim.fn['coc#config'], 'coc.enabled', 1)
+   if ok then
+     if vim.fn.exists('*coc#refresh') == 1 then
+       local keyset = vim.keymap.set
+       keyset("i", "<c-o>", "coc#refresh()", {silent = true, expr = true})
+       keyset("n", "<c-]>", "<Plug>(coc-definition)", {silent = true})
+       keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
+       keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
+       keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+       vim.keymap.set('i', '<c-u>', function()
+         if vim.fn['coc#pum#visible']() == 1 then
+           return vim.fn['coc#pum#confirm']()
+         else
+           return '<C-g>u<CR><C-r>=coc#on_enter()<CR>'
+         end
+       end, { silent = true, expr = true })
 
-  -- Configure coc.nvim notifications
-  vim.fn['coc#config']('notification', {
-    enabled = true,    -- Enable notifications
-    progress = true    -- Show progress updates
-  })
-
-  -- Set log level to info for LSP startup details
-  vim.fn['coc#config']('coc.preferences.logLevel', 'debug')
-
-  -- Optional: Ensure coc.nvim is enabled
-  vim.fn['coc#config']('coc.enabled', true)
-      return
-    end
-  end
+       return
+     end
+   end
 
 local autocmd = vim.api.nvim_create_autocmd
 autocmd("FileType", {

@@ -4,7 +4,10 @@ local ts = require("telescope")
 ts.setup{ 
   defaults = { 
     file_ignore_patterns = { 
-      "target" ,".git"
+      "target" ,
+      ".git",
+      "node_modules",
+      "out"
     }
   }
 }

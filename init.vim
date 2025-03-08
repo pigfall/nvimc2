@@ -39,7 +39,6 @@ set mouse=
 inoremap <cr> <Cmd> call TzzEnter()<Cr>
 inoremap <c-e> <ESC>A
 inoremap <c-a> <ESC>_i
-inoremap <c-u> <Down>
 inoremap <c-d> <ESC><Right>xi
 inoremap <c-j> <ESC>o
 inoremap <c-f> <Right>
@@ -66,6 +65,8 @@ nnoremap <Leader>q :q<CR>
 nmap <Leader>0f :tabnew<CR>:tcd ~/Note<CR><Leader>f
 
 tnoremap <c-j> <c-\><c-n> 
+
+colorscheme vscode
 
 lua << EOF
 if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 then
