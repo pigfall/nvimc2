@@ -10,6 +10,10 @@ vim.notify = require("notify")
        keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
        keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
        keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+       keyset("n", "[d", "<Plug>(coc-diagnostic-prev)", {silent = true})
+       keyset("n", "]d", "<Plug>(coc-diagnostic-next)", {silent = true})
+       local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
+       keyset("i", "<c-n>", 'coc#pum#next(1)', opts)
        vim.keymap.set('i', '<c-u>', function()
          if vim.fn['coc#pum#visible']() == 1 then
            return vim.fn['coc#pum#confirm']()
