@@ -4,6 +4,7 @@ vim.notify = require("notify")
    local ok, err = pcall(vim.fn['coc#config'], 'coc.enabled', 1)
    if ok then
      if vim.fn.exists('*coc#refresh') == 1 then
+       local home = vim.env.HOME or vim.fn.expand('~')
        local keyset = vim.keymap.set
        keyset("i", "<c-o>", "coc#refresh()", {silent = true, expr = true})
        keyset("n", "<c-]>", "<Plug>(coc-definition)", {silent = true})
