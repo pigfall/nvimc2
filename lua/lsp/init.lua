@@ -4,7 +4,13 @@ vim.notify = require("notify")
    local ok, err = pcall(vim.fn['coc#config'], 'coc.enabled', 1)
    if ok then
      if vim.fn.exists('*coc#refresh') == 1 then
+
+       local home = os.getenv('HOME') or vim.fn.expand('~')
        local home = vim.env.HOME or vim.fn.expand('~')
+       local dedicatedNodejs = home .. "/" ..  "tools/" .. "nodejs-coc/bin/node"
+       if vim.fn.filereadable(dedicatedNodejs) == 1 then
+        vim.g.coc_node_path = dedicatedNodejs
+       end
        local keyset = vim.keymap.set
        keyset("i", "<c-o>", "coc#refresh()", {silent = true, expr = true})
        keyset("n", "<c-]>", "<Plug>(coc-definition)", {silent = true})
