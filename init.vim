@@ -79,3 +79,5 @@ end
 
 EOF
 
+
+" nnoremap <silent> gp :echo coc#status()<CR>

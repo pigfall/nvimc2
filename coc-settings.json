@@ -1,4 +1,6 @@
 {
+  "notification.statusLineProgress": false,
+  "diagnostic.displayByAle": false,
   "languageserver": {
     "go": {
       "command": "gopls",
