@@ -66,7 +66,7 @@ nmap <Leader>0f :tabnew<CR>:tcd ~/Note<CR><Leader>f
 
 tnoremap <c-j> <c-\><c-n> 
 
-colorscheme vscode
+"colorscheme vscode
 
 lua << EOF
 if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 then
