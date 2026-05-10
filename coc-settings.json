@@ -11,5 +11,8 @@
         "completeUnimported":true
       }
     }
-  }
+  },
+  "godot.enable": true,
+  "godot.host": "127.0.0.1",
+  "godot.port": 6005
 }

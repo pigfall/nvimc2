@@ -13,12 +13,13 @@ EOF
 
 let mapleader = "'" 
 
+
+
 lua << EOF
 -- local lspconfig = require('lspconfig')
 -- lspconfig.gopls.setup {}
 require("tzz-init")
 EOF
-
 
 " { တ common_option
 " {{ ident
@@ -81,3 +82,13 @@ EOF
 
 
 " nnoremap <silent> gp :echo coc#status()<CR>
+
+lua << EOF
+vim.api.nvim_create_user_command('CRP', function()
+  local path = vim.fn.expand("%:.")
+  vim.fn.setreg('+', path)
+  vim.notify('Copied relative path: ' .. path)
+end, {})
+EOF
+
+
